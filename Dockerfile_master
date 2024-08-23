@@ -1,0 +1,15 @@
+COPY setup/jdk-14.0.2/ /usr/java/jdk-14.0.2/
+COPY setup/lib/ /jmeter/lib/
+
+RUN apt update
+ENV JAVA_HOME="/usr/java/jdk-14.0.2"
+ENV PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/java/jdk-14.0.2/bin"
+RUN update-alternatives --install "/usr/bin/java" "java" "/usr/java/jdk-14.0.2/bin/java" 0
+RUN update-alternatives --install "/usr/bin/javac" "javac" "/usr/java/jdk-14.0.2/bin/javac" 0
+RUN update-alternatives --set java /usr/java/jdk-14.0.2/bin/java
+RUN update-alternatives --set javac /usr/java/jdk-14.0.2/bin/javac
+RUN update-alternatives --list java
+RUN update-alternatives --list javac
+
+# Ports to be exposed from the container for JMeter Master
+EXPOSE 60000
